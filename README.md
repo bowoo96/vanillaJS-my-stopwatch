@@ -1,85 +1,97 @@
-# vanillaJS-my-stopwatch
+# 팀원
 
+- 김보우
+- 김승원
+- 전찬민
 
-## 1. 버튼 4개하고 시간 남으면 추후 2개로 변경예정
+# 구현된 모습
+<a href="https://vanillajs-my-stopwatch-bowoo.netlify.app/">vanillajs-my-stopwatch</a>
+---
 
-## 2. 시작, 중지, 기록, 초기화
+# Skill & Tools
 
-해야할 작업
-- 처음에는 이벤트를 4개로 각각 만든다. => 추후에 wrapper 에 이벤트를 1개로 축소하고 내부에서 분기.
+- HTML
+- CSS
+- VANILLA JAVASCRIPT
 
+---
 
-변수작업
-- Element  
-    - 분 : const minuteEl = document.querySelector("#minute"); 
-    - 초 : 
-    - 밀리초 : 
+# 기능
 
-    - 스타트 : const startBtn = document.querySelector("#button-start")
-    - 스탑 : 
-    - 리셋 : 
-    - 랩 :
+### **Start**
 
-- LAB 기록을 담을 배열을 선언 : history_push[] ,history_unshift[] 
+1. 만약 Interval이 있으면 setInterval 함수를 0.01초 마다 실행시킨다.
+    1. milliSecond + 1 해준다.
+    2. 만약 milliSecond가 60이면
+        1. milliSecond = 0
+        2. second + 1
+    3. 만약 second가 60이면
+        1. second = 0
+        2. minute + 1
+    4. 만약 minute이 60이면
+        1. 스탑워치를 중지 시킨다.
+    5. 화면에 시간을 출력한다.
 
+### **Stop**
 
-- 00:00.00
-값 - let minute = 00 , 초 = 00, 밀리초
+1. clearInterval 함수를 호출하여 interval 멈춰준다.
+2. 인터벌 변수를 비운다.
 
-기능 : Start
-1. button Element 찾고 -> 이벤트(click)을 걸고, 내부에서 setInterval 함수 불러온다. 
-SetInterval(콜백함수, 주기시간);
-setInterval 함수가 실행되면서 값을 리턴할 때 : 리턴하는 값을 변수에 담으면 된다.
+### **Reset**
 
+1. 모든 시간 변수(minute, seconde, milliSecond) 초기화한다.
+2. 화면에 있는 시간 00:00.00 으로 초기화한다.
+3. 인터벌 중지 및 인터벌 변수 비운다.
+4. 기록 내용을 초기화한다.
+5. history 배열을 초기화한다.
 
-계속 증가하다가 (밀리초 <= 59)
+### **Lap**
 
-조건에 따른 분기
-if 밀리초가 60이 되면, (밀리초를 00 으로, second를 +1)
-if 세컨이 60이되면, (세컨은 00으로, 분은 +1) 
-if 분이 60이 되면, (스탑) // 60:00.00
+1. 기록 배열에 현재 분, 초, 밀리초 String 형태로 push한다.
+2. ul 요소를 찾아온다.
+3. 만약 ul 요소가 없으면
+    1. ul 요소를 만들어준다.
+    2. wrapper에 ul 삽입한다.
+4. li 요소를 만든다.
+5. li 요소의 text에 기록정보를 입력한다.
+6. ul 요소에 li 요소를 첫번째 요소에 넣는다.
 
-----------------------------------------------------------------------------
-STOP 기능
+---
 
-setInterval을 멈추면 된다
--> clearInterval(timerId) 함수를 호출하면 된다. 
+# 이 프로젝트를 하는 목적
 
-----------------------------------------------------------------------------
-Reset 기능
-로직순서 : Stop 기능이 먼저 동작한후, 모든 변수(값 - let minute = 00 , 초 = 00, 밀리초) 을 초기화
+---
 
-----------------------------------------------------------------------------
-Lab 기능
+# 어려웠던 점 & 해결방법
 
-1. 동작
-버튼을 눌렀을 때, (시간 값을 받아온다.) 
-click 이벤트가 발생할 때마다 history.push(); (나중에 출력할 때도 편하게??)
+- interval 을 생성하고 clear를 해주는데 clear가 먹히지 않았음
+    - 원인: 생성된 해당 interval을 clear해주어야 하는데 다른 때 생성된 interval을 clear 해주어서 먹히지 않는 것이었음
+    - 해결방법: interval을 한 개만 생성해서 (싱글톤..?) 하나의 해당 interval을 clear 하도록 함
 
+---
 
-구간기록을 담는 태그를 만드는 함수
-(단, ul이 없으면, ul 생성 후 li 생성
-ul이 있으면, li만 생성
-)
-(조건을 확인할 때, 
-    // document.querySelector("ul") true면, html안에 ul태그가 있다는 의미.
-    //document.querySelector("ul") false면, html안에 ul태그가 없다는 의미.
-    if(!document.querySelector("ul")) {
-        ul을 생성해준 후, li 생성주고 작업하면됌
-    }
-    else {
-        li만 생성한 후 작업
-    }
-)
-ul -> li : 
-createElement() -> appaendChild -> innerHTML(textContent)을 통해 값을 입력
+# 리팩토링
 
+- start, stop 버튼을 합치고, reset과 lab버튼을 합쳐서 버튼 2개가 조건에 따라 교차되면서 보여지게 제작.
+- React로 리팩토링.
 
-2. 출력
-출력할 때는 history 배열을 반복하여 값을 가져온다. 
+---
 
+# 회고
 
-[OPTION]
-한번은 push로 담긴 배열을 불러보고,
-다른 한번은 unshift로 담긴 배열을 불러보고
-순서를 확인
+- 👻 **승원**
+    - interval 개념에 대해 정확히 모르고 사용해서 문제가 풀리지 않았던 것 같다.
+    → 사용할 대상에 대해 잘 알고 사용하자!
+
+- 🤡 **보우**
+    - 첫 프로젝트여서 코드를 너무 난잡하게 사용했다. 심지어 사용을 안하는 변수까지 발견.
+        
+        → 조금 더 코드를 알기 쉽게 작성을 해야겠음.
+        
+         
+        
+- 🙉 **찬민**
+    - interval 을 처음 써본 프로젝트였다. 
+    새로운 함수 및 메소드를 사용할 때, 개념을 확실하게 알고 가는 것이 중요할 것 같다.
+
+---

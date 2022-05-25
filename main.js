@@ -40,7 +40,7 @@ let miliSecond = 0;
 
 
 // 버튼 클릭시 동작 함수.
-startBtn.addEventListener('click',start);
+startBtn.addEventListener('click', start);
 
 
 
@@ -55,15 +55,15 @@ startBtn.addEventListener('click',start);
 let setTime;
 
 function start() {
-    if(setTime === undefined){
-        setTime = setInterval(mililSecondPlus,10);
-        function mililSecondPlus(){
+    if (setTime === undefined) {
+        setTime = setInterval(mililSecondPlus, 10);
+        function mililSecondPlus() {
             miliSecond++;
-            if(99 < miliSecond){
+            if (99 < miliSecond) {
                 second++;
-                if(59 < second){
+                if (59 < second) {
                     minute++;
-                    if(60 == minute){
+                    if (60 == minute) {
                         miliSecond = 0;
                         second = 0;
                         secondEl.textContent = second;
@@ -86,7 +86,7 @@ function start() {
 // STOP 기능
 // setInterval을 멈추면 된다
 // -> clearInterval(setTime) 함수를 호출하면 된다.
-stopBtn.addEventListener('click',stop);
+stopBtn.addEventListener('click', stop);
 function stop() {
     clearInterval(setTime);
     setTime = undefined;
@@ -128,7 +128,7 @@ function stop() {
 // 다른 한번은 unshift로 담긴 배열을 불러보고
 // 순서를 확인
 
-labBtn.addEventListener('click',recordShow);
+labBtn.addEventListener('click', recordShow);
 
 let recordList = [];
 
@@ -137,18 +137,18 @@ const wrapperEl = document.querySelector(".wrapper");
 function recordShow() {
     let recordPush = recordList.push(`${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}.${String(miliSecond).padStart(2, '0')}`);
     let ulEl = document.querySelector("ul");
-    
-    if(!ulEl){
+
+    if (!ulEl) {
         const ul = document.createElement("ul");
         wrapperEl.appendChild(ul);
         ulEl = document.querySelector("ul");
     }
-    
+
     const li = document.createElement("li");
     let liEl = document.querySelector("li");
     ulEl.appendChild(li);
     //prepend 사용해보기.
-    ulEl.lastChild.innerHTML = recordList[recordList.length -1];
+    ulEl.lastChild.innerHTML = recordList[recordList.length - 1];
 }
 
 
@@ -156,11 +156,11 @@ function recordShow() {
 // lab으로 남은 기록도 삭제
 // recordList 배열 안에 내용 삭제
 // lab 버튼을 눌러서 생성된 ul, li 삭제
-resetBtn.addEventListener('click',reset);
+resetBtn.addEventListener('click', reset);
 function reset() {
     clearInterval(setTime);
     setTime = undefined;
-    
+
     miliSecond = '00';
     second = '00';
     minute = '00';
@@ -169,8 +169,8 @@ function reset() {
     secondEl.textContent = second;
     minuteEl.textContent = minute;
 
-    recordList.splice(0,recordList.length);
-    
+    recordList.splice(0, recordList.length);
+
     let abc = document.querySelector("ul");
     abc.remove();
 }
